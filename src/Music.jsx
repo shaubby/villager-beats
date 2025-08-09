@@ -126,7 +126,7 @@ function Music(props) {
                     if(audioContext.state =='suspended') {
                         indexRef.current = 0;
                         audioContext.resume();
-                        nextNoteRef.current = 0;
+                        nextNoteRef.current = audioContext.currentTime+0.1;
 
                         setIsPlaying(true);
                         console.log('Audio context resumed');
