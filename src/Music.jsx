@@ -40,7 +40,6 @@ const playAudio = (audioIndex = 0) => {
     }
 };
 
-let sounds1 = [true, true, true, true, true, true, true, true];
 
 function Music(props) {
     const [bpm, setBpm] = useState(80);
@@ -104,41 +103,7 @@ function Music(props) {
                     } else {
                         audioContext.suspend();
                     }}}>click me pls</div>
-            
-            <div className='audio-controls'>
-                <h3>Audio Selection</h3>
-                <div className='audio-buttons'>
-                    {audioFiles.map((_, index) => (
-                        <button 
-                            key={index}
-                            onClick={() => handleAudioSelect(index)}
-                            className={selectedAudio === index ? 'selected' : ''}
-                        >
-                            Villager {index + 1}
-                        </button>
-                    ))}
-                </div>
                 
-                <h3>Sequence Control</h3>
-                <div className='sequence-controls'>
-                    <button onClick={() => updateSequence([0, 1, 2, 3])}>
-                        Sequential (1→2→3→4)
-                    </button>
-                    <button onClick={() => updateSequence([0, 0, 1, 1])}>
-                        Pattern (1→1→2→2)
-                    </button>
-                    <button onClick={() => updateSequence([selectedAudio])}>
-                        Single ({selectedAudio + 1})
-                    </button>
-                    <button onClick={() => updateSequence([3, 2, 1, 0])}>
-                        Reverse (4→3→2→1)
-                    </button>
-                </div>
-                
-                <div className='sequence-display'>
-                    Current sequence: {audioSequence.map(i => i + 1).join(' → ')}
-                </div>
-            </div>
         </div>
     )
 }
