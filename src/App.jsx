@@ -266,48 +266,50 @@ function App() {
             ))}
           </div>
           <div className="grid-options">
-            <button className="add" onClick={addColumn}>
+          <button className="add" onClick={addColumn}>
               <MdAdd />
             </button>
             <button className="remove" onClick={removeColumn}>
               <MdOutlineRemove />
             </button>
-          </div>
-        </div>
-        <div className="sliders">
-          <div className="slider-container">
-            <label htmlFor="tempo-slider">BPM: {Tempo/2}</label>
-            <input
-              id="tempo-slider"
-              type="range"
-              min={120}
-              max={400}
-              value={Tempo}
-              onChange={handleTempoChange}
-              className="slider"
-            />
-          </div>
+            <div
+              className="play"
+              onClick={() => {
+                if (audioContext.state == "suspended") {
+                  indexRef.current = 0;
+                  audioContext.resume();
+                  nextNoteRef.current = audioContext.currentTime + 0.1;
+                  setCurrentStep(indexRef.current);
+                  setIsPlaying(true);
 
+                } else {
+                  audioContext.suspend();
+                  setIsPlaying(false);
+                  setCurrentStep(-1);
 
-          <div
-            className="play"
-            onClick={() => {
-              if (audioContext.state == "suspended") {
-                indexRef.current = 0;
-                audioContext.resume();
-                nextNoteRef.current = audioContext.currentTime + 0.1;
-                setCurrentStep(indexRef.current);
-                setIsPlaying(true);
+                }
+              }}
+            >
+              {isPlaying ? <MdPause /> : <MdPlayArrow />}
+            </div>
+            <div className="slider-container">
+              <label htmlFor="tempo-slider">
+                <img src="/met.png" alt="BPM" className="bpm-icon" />
+              </label>
+              <input
+                id="tempo-slider"
+                type="range"
+                min={120}
+                max={400}
+                value={Tempo}
+                onChange={handleTempoChange}
+                className="slider"
+              />
+            </div>
 
-              } else {
-                audioContext.suspend();
-                setIsPlaying(false);
-                setCurrentStep(-1);
+            
 
-              }
-            }}
-          >
-            {isPlaying ? <MdPause /> : <MdPlayArrow />}
+            
           </div>
         </div>
       </div>

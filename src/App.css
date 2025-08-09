@@ -1,8 +1,24 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('https://github.com/hackclub/shipwrecked/blob/main/public/bay-island-bg.png?raw=true');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
 #root {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
   color: var(--text);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .grid-row {
@@ -11,7 +27,7 @@
   align-items: center;
   width: 100%;
   min-width: 0;
-  gap: 3px;
+  gap: 1.5px;
 }
 .grid-item {
   flex: 1 1 0;
@@ -20,9 +36,9 @@
   margin: 4px;
   border-radius: 10px;
 
-  background: rgba(255, 255, 255, 0.70);
-  border: 1px solid rgba(84, 140, 220, 0.25);
-  box-shadow: 0 4px 14px rgba(84, 140, 220, 0.15);
+  background: rgba(255, 255, 255, 0.932);
+  border: 1px solid rgba(84, 141, 220, 0.688);
+
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
@@ -55,7 +71,7 @@
     rgba(60, 162, 206, 0.75)
   );
   border-color: rgba(54, 105, 182, 0.70);
-  box-shadow: 0 10px 26px rgba(84, 140, 220, 0.30), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0px 5px rgba(84, 140, 220, 0.30), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
 .soundIcon {
@@ -66,37 +82,75 @@
   margin-right: 6px;
 
   background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(60, 162, 206, 0.25);
+  border: 2px solid rgba(39, 80, 97, 0.735);
   box-shadow: 0 6px 16px rgba(84, 140, 220, 0.20);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 .grid-options {
-  width: 64px;
-  min-width: 64px;
+  width: 150px;
+  min-width: 150px;
   height: calc(54vh + 60px);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 10px;
-  padding: 12px;
-  border-radius: 14px;
+  padding: 30px;
+  border-radius: 16px;
+  overflow: hidden;
 
   background: rgba(255, 255, 255, 0.45);
   border: 1px solid rgba(60, 162, 206, 0.25);
   box-shadow: 0 6px 18px rgba(84, 140, 220, 0.18);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  flex: 0 0 64px;
+  flex: 0 0 192px;
+}
+
+.grid-options .slider-container {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(84, 140, 220, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 8px 10px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: auto;
+  width: 100%;
+  height: 100%;
+  min-height: 60px;
+  flex: 1;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.grid-options .slider-container label {
+  font-weight: 600;
+  color: var(--text);
+  text-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.grid-options .slider-container .slider {
+  width: 100%;
+  height: 4px;
 }
 
 .add, .remove, .play {
-  width: 48px;
-  height: 48px;
+  width: 100%;
+  height: 100%;
+  min-height: 48px;
   border-radius: 12px;
-  background: linear-gradient(180deg, rgba(129, 209, 241, 0.35), rgba(84, 140, 220, 0.35));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.813), rgba(255, 255, 255, 0.813));
   color: var(--p-blue-2);
   border: 1px solid rgba(84, 140, 220, 0.35);
   font-size: 26px;
@@ -104,11 +158,13 @@
   align-items: center;
   justify-content: center;
   padding: 0;
+  flex: 1;
   transition: transform 140ms ease, background 140ms ease, border-color 140ms ease, box-shadow 140ms ease, color 140ms ease;
 }
+
 .add:hover, .remove:hover, .play:hover {
   transform: translateY(-2px);
-  background: linear-gradient(135deg, rgba(129, 209, 241, 0.55), rgba(60, 162, 206, 0.55));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.55));
   border-color: rgba(54, 105, 182, 0.65);
   box-shadow: 0 10px 24px rgba(84, 140, 220, 0.28);
   color: var(--p-accent);
@@ -124,7 +180,7 @@
 }
 
 .slider-container {
-  background: rgba(255, 255, 255, 0.50);
+  background: rgba(255, 255, 255, 0.854);
   border: 1px solid rgba(60, 162, 206, 0.25);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -140,6 +196,16 @@
   font-weight: 600;
   color: var(--text);
   text-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.bpm-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .slider {
@@ -198,12 +264,12 @@
 .main-container {
   width: 88vw;
   max-width: 1200px;
-  height: 82vh;
+  height: 88vh;
   padding: 20px 24px;
   border-radius: 16px;
 
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(84, 140, 220, 0.30);
+  background: rgba(255, 255, 255, 0.313);
+  border: 2px solid rgba(84, 141, 220, 0.453);
   box-shadow: 0 12px 36px rgba(84, 140, 220, 0.20);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
@@ -220,6 +286,7 @@
 .music-grid {
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 16px;
   max-width: 100%;
   overflow: hidden;
@@ -230,11 +297,11 @@
 .grid-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0px;
   padding: 16px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(60, 162, 206, 0.25);
+  background: rgba(255, 255, 255, 0.314);
+  border: 2px solid rgba(60, 162, 206, 0.421);
   box-shadow: 0 8px 22px rgba(60, 162, 206, 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
