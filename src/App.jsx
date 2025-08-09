@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MdAdd, MdOutlineRemove, MdPlayArrow } from "react-icons/md";
 import "./App.css";
+import Music from './Music';
 
 function App() {
   const [Tempo, setTempo] = useState(120);
@@ -90,9 +91,12 @@ function App() {
               className="slider"
             />
           </div>
-          <button className="play">
-            <MdPlayArrow/>
-          </button>
+          <Music 
+            sounds1={[true, true, false, false, true, false, false, false]}
+            sounds2={[true, true, false, false, false, true, false, false]}
+            sounds3={[false, false, true, false, false, false, true, false]}
+            sounds4={[false, false, false, true, false, false, false, true]}/>
+          
         </div>
       </div>
     </>
