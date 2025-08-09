@@ -243,6 +243,7 @@
   max-width: 100%;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-color: rgba(60, 162, 206, 0.25) rgba(255, 255, 255, 0.45);
 }
 
 
