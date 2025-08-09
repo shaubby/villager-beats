@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactAudioContext from './AudioContext';
 import TimeContext from './TimeContext'
 import DelayContext from './DelayContext';
-import villager1Audio from './assets/villager1.mp3';
-import villager2Audio from './assets/villager2.mp3';
-import villager3Audio from './assets/villager3.mp3';
-import villager4Audio from './assets/villager4.mp3';
+import villager1Audio from './assets/renran.mp3';
+import villager2Audio from './assets/sarah.mp3';
+import villager3Audio from './assets/clay.mp3';
+import villager4Audio from './assets/vellager4.mp3';
 import "./App.css";
 import { MdPlayArrow, MdPause } from 'react-icons/md';
 
