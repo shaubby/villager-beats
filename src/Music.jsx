@@ -70,29 +70,27 @@ function Music(props) {
             }
             
             // Check each sound track
-            console.log(props.sounds[0]);
-            console.log(props.sounds)
-            console.log('Current index:', props.sounds[0][indexRef.current]);
+            console.log('Current index:', indexRef.current);
 
             if (props.sounds[0][indexRef.current]) {
                 const currentAudioIndex = 0;
                 playAudio(currentAudioIndex);
-                console.log(`Playing sound from sequence 0 at index ${indexRef.current}`);
+                //console.log(`Playing sound from sequence 0 at index ${indexRef.current}`);
             }
             if (props.sounds[1] && props.sounds[1][indexRef.current]) {
                 const currentAudioIndex = 1;
                 playAudio(currentAudioIndex);
-                console.log(`Playing sound from sequence 1 at index ${indexRef.current}`);
+                //console.log(`Playing sound from sequence 1 at index ${indexRef.current}`);
             }
             if (props.sounds[2] && props.sounds[2][indexRef.current]) {
                 const currentAudioIndex = 2;
                 playAudio(currentAudioIndex);
-                console.log(`Playing sound from sequence 2 at index ${indexRef.current}`);
+                //console.log(`Playing sound from sequence 2 at index ${indexRef.current}`);
             }
             if (props.sounds[3] && props.sounds[3][indexRef.current]) {
                 const currentAudioIndex = 3;
                 playAudio(currentAudioIndex);
-                console.log(`Playing sound from sequence 3 at index ${indexRef.current}`);
+                //console.log(`Playing sound from sequence 3 at index ${indexRef.current}`);
             }
             indexRef.current++;
         }
@@ -126,7 +124,10 @@ function Music(props) {
         <div>
             <div className='play' onClick = {() => {
                     if(audioContext.state =='suspended') {
+                        indexRef.current = 0;
                         audioContext.resume();
+                        nextNoteRef.current = 0;
+
                         setIsPlaying(true);
                         console.log('Audio context resumed');
                         console.log('Props sounds:', props.sounds);
