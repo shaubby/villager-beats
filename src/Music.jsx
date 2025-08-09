@@ -5,7 +5,7 @@ import DelayContext from './DelayContext';
 import villager1Audio from './assets/renran.mp3';
 import villager2Audio from './assets/sarah.mp3';
 import villager3Audio from './assets/clay.mp3';
-import villager4Audio from './assets/villager4.mp3';
+import villager4Audio from './assets/evan.mp3';
 import villager5Audio from './assets/deven.mp3';
 import villager6Audio from './assets/paolo.mp3';
 import villager7Audio from './assets/snare.mp3';
