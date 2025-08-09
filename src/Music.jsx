@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactAudioContext from './AudioContext';
 import TimeContext from './TimeContext'
 import DelayContext from './DelayContext';
@@ -7,7 +7,7 @@ import villager2Audio from './assets/villager2.mp3';
 import villager3Audio from './assets/villager3.mp3';
 import villager4Audio from './assets/villager4.mp3';
 import "./App.css";
-import { MdPlayArrow } from 'react-icons/md';
+import { MdPlayArrow, MdPause } from 'react-icons/md';
 
 let audioContext = new AudioContext();
 let out = audioContext.destination;
@@ -41,59 +41,65 @@ const playAudio = (audioIndex = 0) => {
     }
 };
 
-
 function Music(props) {
     const [bpm, setBpm] = useState(80);
-    const [delay, setDelay] = useState(60/bpm);
+    const [delay, setDelay] = useState(60/props.bpm);
     const [isPlaying, setIsPlaying] = useState(false);
     const [refreshRate, setRefreshRate] = useState(1);
     const [state, setState] = useState('suspended');
     const [selectedAudio, setSelectedAudio] = useState(0); // Track which audio file to use    
-    let index = 0;
-    let nextNote = 0;
+    
+    // Use refs to persist values across renders
+    const indexRef = useRef(0);
+    const nextNoteRef = useRef(0);
 
     const soundLoop = () => {
         setState(prevstate => audioContext.state);
-        if (audioContext.currentTime > nextNote) {
-            nextNote += delay;
-            if (index >= props.sounds1.length) {
-                index = 0;
+        if (audioContext.currentTime > nextNoteRef.current) {
+            nextNoteRef.current += delay;
+            console.log(nextNoteRef.current);
+            
+            // Check if props.sounds exists and has arrays
+            if (!props.sounds || !Array.isArray(props.sounds) || props.sounds.length === 0) {
+                return; // Exit early if no sounds data
             }
-            if (props.sounds1 && props.sounds1[index]) {
-                // Play audio from sequence consecutively
+            
+            // Check if we've reached the end of the sequence
+            if (indexRef.current >= props.sounds[0].length) {
+                indexRef.current = 0;
+            }
+            
+            // Check each sound track
+            console.log(props.sounds[0]);
+            console.log(props.sounds)
+            console.log('Current index:', props.sounds[0][indexRef.current]);
+
+            if (props.sounds[0][indexRef.current]) {
                 const currentAudioIndex = 0;
                 playAudio(currentAudioIndex);
-                console.log(`Playing sound from sequence 1 at index ${index}`);
+                console.log(`Playing sound from sequence 0 at index ${indexRef.current}`);
             }
-            if (props.sounds2 && props.sounds2[index]) {
-                // Play audio from sequence consecutively
+            if (props.sounds[1] && props.sounds[1][indexRef.current]) {
                 const currentAudioIndex = 1;
                 playAudio(currentAudioIndex);
-                console.log(`Playing sound from sequence 1 at index ${index}`);
+                console.log(`Playing sound from sequence 1 at index ${indexRef.current}`);
             }
-            if (props.sounds3 && props.sounds3[index]) {
-                // Play audio from sequence consecutively
+            if (props.sounds[2] && props.sounds[2][indexRef.current]) {
                 const currentAudioIndex = 2;
                 playAudio(currentAudioIndex);
-                console.log(`Playing sound from sequence 1 at index ${index}`);
+                console.log(`Playing sound from sequence 2 at index ${indexRef.current}`);
             }
-            if (props.sounds4 && props.sounds4[index]) {
-                // Play audio from sequence consecutively
+            if (props.sounds[3] && props.sounds[3][indexRef.current]) {
                 const currentAudioIndex = 3;
                 playAudio(currentAudioIndex);
-                console.log(`Playing sound from sequence 1 at index ${index}`);
+                console.log(`Playing sound from sequence 3 at index ${indexRef.current}`);
             }
-            index++;
+            indexRef.current++;
         }
     }
 
     const handleAudioSelect = (audioIndex) => {
         setSelectedAudio(audioIndex);
-    };
-
-    const updateSequence = (newSequence) => {
-        setAudioSequence(newSequence);
-        setSequenceIndex(0); // Reset sequence position
     };
 
     useEffect(() => { 
@@ -106,6 +112,7 @@ function Music(props) {
 
         setDelay(prevDelay => (60.0/bpm));
         return () => {
+            setIsPlaying(false);
             audioContext.close();
             audioContext = new AudioContext();
             out = audioContext.destination;
@@ -113,16 +120,22 @@ function Music(props) {
             
             clearInterval(interval);
         }
-    }, [bpm, delay]);
+    }, [bpm, delay, props.sounds, props.bpm]);
 
     return (
         <div>
             <div className='play' onClick = {() => {
                     if(audioContext.state =='suspended') {
                         audioContext.resume();
+                        setIsPlaying(true);
+                        console.log('Audio context resumed');
+                        console.log('Props sounds:', props.sounds);
                     } else {
                         audioContext.suspend();
-                    }}}><MdPlayArrow/></div>
+                        setIsPlaying(false);
+                        console.log('Audio context suspended');
+                        console.log('Props sounds:', props.sounds);
+                    }}}>{isPlaying ? <MdPause /> : <MdPlayArrow/>}</div>
                 
         </div>
     )

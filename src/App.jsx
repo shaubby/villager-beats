@@ -92,10 +92,9 @@ function App() {
             />
           </div>
           <Music 
-            sounds1={[true, true, false, false, true, false, false, false]}
-            sounds2={[true, true, false, false, false, true, false, false]}
-            sounds3={[false, false, true, false, false, false, true, false]}
-            sounds4={[false, false, false, true, false, false, false, true]}/>
+            sounds={musicGrid}
+            bpm={Tempo}
+/>
           
         </div>
       </div>
