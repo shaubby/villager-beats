@@ -4,9 +4,9 @@ import "./App.css";
 import Music from './Music';
 
 function App() {
-  const [Tempo, setTempo] = useState(120);
+  const [Tempo, setTempo] = useState(240);
   const [Volume, setVolume] = useState(80);
-  const [musicGrid, setMusicGrid] = useState(Array.from({ length: 6 }, () => Array(8).fill(false)));
+  const [musicGrid, setMusicGrid] = useState(Array.from({ length: 8 }, () => Array(8).fill(false)));
   const [columns, setColumns] = useState(8);
   const [isPlaying, setPlaying] = useState(false);
 
@@ -43,7 +43,7 @@ function App() {
       <div className="main-container">
         <div className="music-grid">
           <div className="grid-container">
-            {[...Array(6)].map((x, i) => (
+            {[...Array(8)].map((x, i) => (
               <div key={"row" + i} className="grid-row">
                 <img src={`/${i + 1}.png`} className="soundIcon"></img>
                 {[...Array(columns)].map((x2, i2) => (
@@ -71,8 +71,8 @@ function App() {
             <input
               id="tempo-slider"
               type="range"
-              min={60}
-              max={200}
+              min={120}
+              max={400}
               value={Tempo}
               onChange={handleTempoChange}
               className="slider"

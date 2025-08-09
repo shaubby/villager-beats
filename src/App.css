@@ -31,6 +31,24 @@
   border-color: rgba(54, 105, 182, 0.55);
   box-shadow: 0 8px 22px rgba(84, 140, 220, 0.25);
 }
+
+.grid-item.current-step {
+  position: relative;
+  border-color: rgba(54, 105, 182, 0.85);
+  box-shadow:
+    0 0 0 2px rgba(84, 140, 220, 0.25) inset,
+    0 8px 22px rgba(84, 140, 220, 0.25),
+    0 0 0 3px rgba(129, 209, 241, 0.35);
+  background: linear-gradient(135deg, rgba(129, 209, 241, 0.35), rgba(60, 162, 206, 0.35));
+  animation: stepPulse 600ms ease-in-out;
+}
+
+@keyframes stepPulse {
+  0% { transform: translateY(0) scale(0.98); }
+  50% { transform: translateY(-1px) scale(1.01); }
+  100% { transform: translateY(0) scale(0.98); }
+}
+
 .clicked {
   background: linear-gradient(135deg,
     rgba(129, 209, 241, 0.75),
@@ -205,6 +223,8 @@
   gap: 16px;
   max-width: 100%;
   overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .grid-container {
@@ -213,7 +233,6 @@
   gap: 10px;
   padding: 16px;
   border-radius: 14px;
-
   background: rgba(255, 255, 255, 0.45);
   border: 1px solid rgba(60, 162, 206, 0.25);
   box-shadow: 0 8px 22px rgba(60, 162, 206, 0.15);
@@ -222,6 +241,8 @@
   flex: 1 1 auto;
   min-width: 0;
   max-width: 100%;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 
