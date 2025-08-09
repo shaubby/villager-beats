@@ -2,41 +2,53 @@ import React, { useState, useEffect } from 'react';
 import ReactAudioContext from './AudioContext';
 import TimeContext from './TimeContext'
 import DelayContext from './DelayContext';
-import villager1Audio from './assets/villager2.mp3';
+import villager1Audio from './assets/villager1.mp3';
+import villager2Audio from './assets/villager2.mp3';
+import villager3Audio from './assets/villager3.mp3';
+import villager4Audio from './assets/villager4.mp3';
 import './music.css';
 
 let audioContext = new AudioContext();
 let out = audioContext.destination;
-let audioBuffer = null;
+let audioBuffers = []; // Array to store multiple audio buffers
 
-// Function to load audio file
+const audioFiles = [villager1Audio, villager2Audio, villager3Audio, villager4Audio];
+
+// Function to load all audio files
 const loadAudio = async () => {
     try {
-        const response = await fetch(villager1Audio);
-        const arrayBuffer = await response.arrayBuffer();
-        audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        audioBuffers = [];
+        for (let i = 0; i < audioFiles.length; i++) {
+            const response = await fetch(audioFiles[i]);
+            const arrayBuffer = await response.arrayBuffer();
+            const buffer = await audioContext.decodeAudioData(arrayBuffer);
+            audioBuffers[i] = buffer;
+        }
+        console.log('All audio files loaded successfully');
     } catch (error) {
         console.error('Error loading audio:', error);
     }
 };
 
-// Function to play the audio
-const playAudio = () => {
-    if (audioBuffer && audioContext.state === 'running') {
+// Function to play the audio by index
+const playAudio = (audioIndex = 0) => {
+    if (audioBuffers[audioIndex] && audioContext.state === 'running') {
         const source = audioContext.createBufferSource();
-        source.buffer = audioBuffer;
+        source.buffer = audioBuffers[audioIndex];
         source.connect(out);
         source.start();
     }
 };
 
 let sounds1 = [true, true, true, true, true, true, true, true];
+
 function Music(props) {
     const [bpm, setBpm] = useState(80);
     const [delay, setDelay] = useState(60/bpm);
     const [isPlaying, setIsPlaying] = useState(false);
     const [refreshRate, setRefreshRate] = useState(1);
     const [state, setState] = useState('suspended');
+    const [selectedAudio, setSelectedAudio] = useState(0); // Track which audio file to use    
     let index = 0;
     let nextNote = 0;
 
@@ -47,15 +59,26 @@ function Music(props) {
             if (index >= sounds1.length) {
                 index = 0;
             }
-            if (sounds1[index]) {
-                playAudio();
+            if (props.sounds1 && props.sounds1[index]) {
+                // Play audio from sequence consecutively
+                const currentAudioIndex = 1;
+                playAudio(currentAudioIndex);
             }
             index++;
         }
     }
 
+    const handleAudioSelect = (audioIndex) => {
+        setSelectedAudio(audioIndex);
+    };
+
+    const updateSequence = (newSequence) => {
+        setAudioSequence(newSequence);
+        setSequenceIndex(0); // Reset sequence position
+    };
+
     useEffect(() => { 
-        // Load the audio file when component mounts
+        // Load all audio files when component mounts
         loadAudio();
 
         audioContext.suspend();
@@ -67,20 +90,57 @@ function Music(props) {
             audioContext.close();
             audioContext = new AudioContext();
             out = audioContext.destination;
-            audioBuffer = null; // Reset audio buffer
+            audioBuffers = []; // Reset audio buffers
             
             clearInterval(interval);
         }
     }, [bpm, delay]);
 
     return (
-        <div className='playButton' onClick = {() => {
-                if(audioContext.state =='suspended') {
-                    audioContext.resume();
-                } else {
-                    audioContext.suspend();
-                }}}>click me pls</div>
+        <div>
+            <div className='playButton' onClick = {() => {
+                    if(audioContext.state =='suspended') {
+                        audioContext.resume();
+                    } else {
+                        audioContext.suspend();
+                    }}}>click me pls</div>
+            
+            <div className='audio-controls'>
+                <h3>Audio Selection</h3>
+                <div className='audio-buttons'>
+                    {audioFiles.map((_, index) => (
+                        <button 
+                            key={index}
+                            onClick={() => handleAudioSelect(index)}
+                            className={selectedAudio === index ? 'selected' : ''}
+                        >
+                            Villager {index + 1}
+                        </button>
+                    ))}
+                </div>
+                
+                <h3>Sequence Control</h3>
+                <div className='sequence-controls'>
+                    <button onClick={() => updateSequence([0, 1, 2, 3])}>
+                        Sequential (1→2→3→4)
+                    </button>
+                    <button onClick={() => updateSequence([0, 0, 1, 1])}>
+                        Pattern (1→1→2→2)
+                    </button>
+                    <button onClick={() => updateSequence([selectedAudio])}>
+                        Single ({selectedAudio + 1})
+                    </button>
+                    <button onClick={() => updateSequence([3, 2, 1, 0])}>
+                        Reverse (4→3→2→1)
+                    </button>
+                </div>
+                
+                <div className='sequence-display'>
+                    Current sequence: {audioSequence.map(i => i + 1).join(' → ')}
+                </div>
+            </div>
+        </div>
     )
-
 }
+
 export default Music;
