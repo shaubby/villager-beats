@@ -65,10 +65,26 @@ function App() {
   const [selectedAudio, setSelectedAudio] = useState(0); // Track which audio file to use
   const [currentStep, setCurrentStep] = useState(-1);
 
+  useEffect(() => {
+    const newMusicGrid = musicGrid.map((row) => [...row]);
+    newMusicGrid[7][0] = true; // Set the first cell as clicked by default
+    newMusicGrid[7][4] = true; // Set the first cell as clicked by default
+    newMusicGrid[7][3] = true; // Set the first cell as clicked by default
+    newMusicGrid[6][2] = true; // Set the first cell as clicked by default
+    newMusicGrid[6][6] = true; // Set the first cell as clicked by default
+    newMusicGrid[0][0] = true; // Set the first cell as clicked by default
+    newMusicGrid[1][2] = true; // Set the first cell as clicked by default
+    newMusicGrid[4][3] = true; // Set the first cell as clicked by default
+    newMusicGrid[4][4] = true; // Set the first cell as clicked by default
+    newMusicGrid[5][4] = true; // Set the first cell as clicked by default
+    newMusicGrid[3][6] = true; // Set the first cell as clicked by default
+    setMusicGrid(newMusicGrid);
+  }, []);
+
   // Use refs to persist values across renders
   const indexRef = useRef(0);
   const nextNoteRef = useRef(0);
-
+4
   const soundLoop = () => {
     setState((prevstate) => audioContext.state);
     if (audioContext.currentTime > nextNoteRef.current) {
@@ -206,7 +222,7 @@ function App() {
         </div>
         <div className="sliders">
           <div className="slider-container">
-            <label htmlFor="tempo-slider">Tempo: {Tempo} BPM</label>
+            <label htmlFor="tempo-slider">BPM: {Tempo/2}</label>
             <input
               id="tempo-slider"
               type="range"
@@ -218,18 +234,7 @@ function App() {
             />
           </div>
 
-          <div className="slider-container">
-            <label htmlFor="volume-slider">Volume: {Volume}</label>
-            <input
-              id="volume-slider"
-              type="range"
-              min={0}
-              max={100}
-              value={Volume}
-              onChange={handleVolumeChange}
-              className="slider"
-            />
-          </div>
+
           <div
             className="play"
             onClick={() => {
