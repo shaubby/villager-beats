@@ -46,7 +46,7 @@ const playAudio = (audioIndex = 0) => {
 };
 
 function Music(props) {
-    const [bpm, setBpm] = useState(80);
+
     const [delay, setDelay] = useState(60/props.bpm);
     const [isPlaying, setIsPlaying] = useState(false);
     const [refreshRate, setRefreshRate] = useState(1);
@@ -132,7 +132,7 @@ function Music(props) {
 
         let interval = setInterval(soundLoop, refreshRate);
 
-        setDelay(prevDelay => (60.0/bpm));
+        setDelay(prevDelay => (60.0/props.bpm));
         return () => {
             setIsPlaying(false);
             audioContext.close();
@@ -142,7 +142,7 @@ function Music(props) {
             
             clearInterval(interval);
         }
-    }, [bpm, delay, props.sounds, props.bpm]);
+    }, [delay, props.sounds, props.bpm]);
 
     return (
         <div>
