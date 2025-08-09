@@ -11,8 +11,8 @@ function App() {
     <>
       <div>
         <Music 
-        sounds1={[true, false, false, false, true, false, false, false]}
-        sounds2={[false, true, false, false, false, true, false, false]}
+        sounds1={[true, true, false, false, true, false, false, false]}
+        sounds2={[true, true, false, false, false, true, false, false]}
         sounds3={[false, false, true, false, false, false, true, false]}
         sounds4={[false, false, false, true, false, false, false, true]}/>
         <a href="https://vite.dev" target="_blank">

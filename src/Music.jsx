@@ -60,25 +60,25 @@ function Music(props) {
             }
             if (props.sounds1 && props.sounds1[index]) {
                 // Play audio from sequence consecutively
-                const currentAudioIndex = 1;
+                const currentAudioIndex = 0;
                 playAudio(currentAudioIndex);
                 console.log(`Playing sound from sequence 1 at index ${index}`);
             }
             if (props.sounds2 && props.sounds2[index]) {
                 // Play audio from sequence consecutively
-                const currentAudioIndex = 2;
+                const currentAudioIndex = 1;
                 playAudio(currentAudioIndex);
                 console.log(`Playing sound from sequence 1 at index ${index}`);
             }
             if (props.sounds3 && props.sounds3[index]) {
                 // Play audio from sequence consecutively
-                const currentAudioIndex = 1;
+                const currentAudioIndex = 2;
                 playAudio(currentAudioIndex);
                 console.log(`Playing sound from sequence 1 at index ${index}`);
             }
             if (props.sounds4 && props.sounds4[index]) {
                 // Play audio from sequence consecutively
-                const currentAudioIndex = 4;
+                const currentAudioIndex = 3;
                 playAudio(currentAudioIndex);
                 console.log(`Playing sound from sequence 1 at index ${index}`);
             }
