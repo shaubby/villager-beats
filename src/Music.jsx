@@ -5,7 +5,11 @@ import DelayContext from './DelayContext';
 import villager1Audio from './assets/renran.mp3';
 import villager2Audio from './assets/sarah.mp3';
 import villager3Audio from './assets/clay.mp3';
-import villager4Audio from './assets/vellager4.mp3';
+import villager4Audio from './assets/villager4.mp3';
+import villager5Audio from './assets/deven.mp3';
+import villager6Audio from './assets/paolo.mp3';
+import villager7Audio from './assets/snare.mp3';
+import villager8Audio from './assets/kick.mp3';
 import "./App.css";
 import { MdPlayArrow, MdPause } from 'react-icons/md';
 
@@ -13,7 +17,7 @@ let audioContext = new AudioContext();
 let out = audioContext.destination;
 let audioBuffers = []; // Array to store multiple audio buffers
 
-const audioFiles = [villager1Audio, villager2Audio, villager3Audio, villager4Audio];
+const audioFiles = [villager1Audio, villager2Audio, villager3Audio, villager4Audio, villager5Audio, villager6Audio, villager7Audio, villager8Audio];
 
 // Function to load all audio files
 const loadAudio = async () => {
@@ -89,6 +93,26 @@ function Music(props) {
             }
             if (props.sounds[3] && props.sounds[3][indexRef.current]) {
                 const currentAudioIndex = 3;
+                playAudio(currentAudioIndex);
+                //console.log(`Playing sound from sequence 3 at index ${indexRef.current}`);
+            }
+            if (props.sounds[4][indexRef.current]) {
+                const currentAudioIndex = 4;
+                playAudio(currentAudioIndex);
+                //console.log(`Playing sound from sequence 0 at index ${indexRef.current}`);
+            }
+            if (props.sounds[5] && props.sounds[5][indexRef.current]) {
+                const currentAudioIndex = 5;
+                playAudio(currentAudioIndex);
+                //console.log(`Playing sound from sequence 1 at index ${indexRef.current}`);
+            }
+            if (props.sounds[6] && props.sounds[6][indexRef.current]) {
+                const currentAudioIndex = 6;
+                playAudio(currentAudioIndex);
+                //console.log(`Playing sound from sequence 2 at index ${indexRef.current}`);
+            }
+            if (props.sounds[7] && props.sounds[7][indexRef.current]) {
+                const currentAudioIndex = 7;
                 playAudio(currentAudioIndex);
                 //console.log(`Playing sound from sequence 3 at index ${indexRef.current}`);
             }
