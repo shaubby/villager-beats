@@ -10,7 +10,11 @@ function App() {
   return (
     <>
       <div>
-        
+        <Music 
+        sounds1={[true, false, false, false, true, false, false, false]}
+        sounds2={[false, true, false, false, false, true, false, false]}
+        sounds3={[false, false, true, false, false, false, true, false]}
+        sounds4={[false, false, false, true, false, false, false, true]}/>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>

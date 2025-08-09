@@ -55,13 +55,32 @@ function Music(props) {
         setState(prevstate => audioContext.state);
         if (audioContext.currentTime > nextNote) {
             nextNote += delay;
-            if (index >= sounds1.length) {
+            if (index >= props.sounds1.length) {
                 index = 0;
             }
             if (props.sounds1 && props.sounds1[index]) {
                 // Play audio from sequence consecutively
                 const currentAudioIndex = 1;
                 playAudio(currentAudioIndex);
+                console.log(`Playing sound from sequence 1 at index ${index}`);
+            }
+            if (props.sounds2 && props.sounds2[index]) {
+                // Play audio from sequence consecutively
+                const currentAudioIndex = 2;
+                playAudio(currentAudioIndex);
+                console.log(`Playing sound from sequence 1 at index ${index}`);
+            }
+            if (props.sounds3 && props.sounds3[index]) {
+                // Play audio from sequence consecutively
+                const currentAudioIndex = 1;
+                playAudio(currentAudioIndex);
+                console.log(`Playing sound from sequence 1 at index ${index}`);
+            }
+            if (props.sounds4 && props.sounds4[index]) {
+                // Play audio from sequence consecutively
+                const currentAudioIndex = 4;
+                playAudio(currentAudioIndex);
+                console.log(`Playing sound from sequence 1 at index ${index}`);
             }
             index++;
         }
