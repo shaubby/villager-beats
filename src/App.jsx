@@ -4,15 +4,22 @@ import "./App.css";
 import Music from "./Music";
 import villager1Audio from "./assets/renran.mp3";
 import villager2Audio from "./assets/sarah.mp3";
-import villager3Audio from "./assets/clay.mp3";
-import villager4Audio from "./assets/villager4.mp3";
+import villager3Audio from "./assets/estella.mp3";
+import villager4Audio from "./assets/evan.mp3";
 import villager5Audio from "./assets/deven.mp3";
 import villager6Audio from "./assets/paolo.mp3";
 import villager7Audio from "./assets/snare.mp3";
 import villager8Audio from "./assets/kick.mp3";
+
+// First audio context (existing)
 let audioContext = new AudioContext();
 let out = audioContext.destination;
 let audioBuffers = []; // Array to store multiple audio buffers
+
+// Second audio context (new)
+let secondAudioContext = new AudioContext();
+let secondOut = secondAudioContext.destination;
+let secondAudioBuffers = []; // Array to store audio buffers for second context
 
 const audioFiles = [
   villager1Audio,
@@ -25,7 +32,7 @@ const audioFiles = [
   villager8Audio,
 ];
 
-// Function to load all audio files
+// Function to load all audio files (existing)
 const loadAudio = async () => {
   try {
     audioBuffers = [];
@@ -41,7 +48,23 @@ const loadAudio = async () => {
   }
 };
 
-// Function to play the audio by index
+// Function to load audio files for second context
+const loadSecondAudio = async () => {
+  try {
+    secondAudioBuffers = [];
+    for (let i = 0; i < audioFiles.length; i++) {
+      const response = await fetch(audioFiles[i]);
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = await secondAudioContext.decodeAudioData(arrayBuffer);
+      secondAudioBuffers[i] = buffer;
+    }
+    console.log("Second audio context files loaded successfully");
+  } catch (error) {
+    console.error("Error loading second audio:", error);
+  }
+};
+
+// Function to play the audio by index (existing)
 const playAudio = (audioIndex = 0) => {
   if (audioBuffers[audioIndex] && audioContext.state === "running") {
     const source = audioContext.createBufferSource();
@@ -50,6 +73,25 @@ const playAudio = (audioIndex = 0) => {
     source.start();
   }
 };
+
+// Function to play audio from second context
+const playSecondAudio = (audioIndex = 0) => {
+  // Ensure context is running, but don't call resume if already running
+  if (secondAudioContext.state === 'suspended') {
+    secondAudioContext.resume();
+  }
+  
+  if (secondAudioBuffers[audioIndex]) {
+    const source = secondAudioContext.createBufferSource();
+    source.buffer = secondAudioBuffers[audioIndex];
+    source.connect(secondOut);
+    source.start();
+  }
+};
+
+// Make second audio context globally accessible
+window.playSecondAudio = playSecondAudio;
+window.secondAudioContext = secondAudioContext;
 
 function App() {
   const [Tempo, setTempo] = useState(240);
@@ -84,7 +126,7 @@ function App() {
   // Use refs to persist values across renders
   const indexRef = useRef(0);
   const nextNoteRef = useRef(0);
-4
+
   const soundLoop = () => {
     setState((prevstate) => audioContext.state);
     if (audioContext.currentTime > nextNoteRef.current) {
@@ -165,6 +207,17 @@ function App() {
     };
   }, [delay, musicGrid, Tempo]);
 
+  // Separate useEffect for second audio context (only runs once)
+  useEffect(() => {
+    loadSecondAudio(); // Load audio for second context
+    secondAudioContext.suspend(); // Keep second context ready to play
+    
+    return () => {
+      // Only clean up on component unmount
+      secondAudioContext.close();
+    };
+  }, []); // Empty dependency array - only runs once
+
   const handleTempoChange = (e) => {
     setTempo(e.target.value);
   };
@@ -205,7 +258,8 @@ function App() {
                   <div
                     className={`grid-item ${musicGrid[i][i2] ? "clicked" : ""} ${currentStep === i2 ? "current-step" : ""}`}
                     key={"row" + i + "item" + i2}
-                    onClick={() => changeGrid(i, i2)}
+                    onClick={() => {changeGrid(i, i2);
+                    }}
                   ></div>
                 ))}
               </div>
@@ -244,14 +298,12 @@ function App() {
                 nextNoteRef.current = audioContext.currentTime + 0.1;
                 setCurrentStep(indexRef.current);
                 setIsPlaying(true);
-                console.log("Audio context resumed");
-                console.log("Props sounds:", props.sounds);
+
               } else {
                 audioContext.suspend();
                 setIsPlaying(false);
                 setCurrentStep(-1);
-                console.log("Audio context suspended");
-                console.log("Props sounds:", props.sounds);
+
               }
             }}
           >
