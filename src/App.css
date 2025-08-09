@@ -1,42 +1,234 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  color: var(--text);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.grid-row {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;      /* was 75vw */
+  min-width: 0;     /* allow children to shrink */
+  gap: 3px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.grid-item {
+  flex: 1 1 0;      /* can grow/shrink evenly */
+  min-width: 0;
+  height: 8vh;
+  margin: 4px;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.70);
+  border: 1px solid rgba(84, 140, 220, 0.25);      /* --p-blue-2 */
+  box-shadow: 0 4px 14px rgba(84, 140, 220, 0.15);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.grid-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(54, 105, 182, 0.55);          /* --p-accent */
+  box-shadow: 0 8px 22px rgba(84, 140, 220, 0.25);
+}
+.clicked {
+  background: linear-gradient(135deg,
+    rgba(129, 209, 241, 0.75),                  /* --p-accent-2 */
+    rgba(60, 162, 206, 0.75)                    /* --p-cyan */
+  );
+  border-color: rgba(54, 105, 182, 0.70);         /* --p-accent */
+  box-shadow: 0 10px 26px rgba(84, 140, 220, 0.30), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+/* Sound icon */
+.soundIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 6px;
+
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(60, 162, 206, 0.25);      /* --p-cyan */
+  box-shadow: 0 6px 16px rgba(84, 140, 220, 0.20);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Grid controls */
+.grid-options {
+  width: 64px;
+  min-width: 64px;
+  height: calc(54vh + 60px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(60, 162, 206, 0.25);
+  box-shadow: 0 6px 18px rgba(84, 140, 220, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  flex: 0 0 64px;   /* fixed width control rail */
+}
+
+/* Fixed invalid sizes (2w -> px) and glass buttons */
+.add, .remove, .play {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(129, 209, 241, 0.35), rgba(84, 140, 220, 0.35));
+  color: var(--p-blue-2);
+  border: 1px solid rgba(84, 140, 220, 0.35);
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform 140ms ease, background 140ms ease, border-color 140ms ease, box-shadow 140ms ease, color 140ms ease;
+}
+.add:hover, .remove:hover, .play:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(129, 209, 241, 0.55), rgba(60, 162, 206, 0.55));
+  border-color: rgba(54, 105, 182, 0.65);
+  box-shadow: 0 10px 24px rgba(84, 140, 220, 0.28);
+  color: var(--p-accent);
+}
+
+/* Sliders panel */
+.sliders {
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 12px;
+}
+
+.slider-container {
+  background: rgba(255, 255, 255, 0.50);
+  border: 1px solid rgba(60, 162, 206, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 10px 14px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 220px;
+}
+.slider-container label {
+  font-weight: 600;
+  color: var(--text);
+  text-shadow: none;
+}
+
+/* Slider track + thumb */
+.slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 100px;
+  background: rgba(84, 140, 220, 0.20);            /* track bg */
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid rgba(84, 140, 220, 0.30);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--p-accent-2), var(--p-cyan));
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid rgba(84, 140, 220, 0.50);
+  box-shadow: 0 2px 6px rgba(84, 140, 220, 0.30);
+  transition: transform 120ms ease;
+}
+
+.slider::-webkit-slider-thumb:hover { transform: scale(1.08); }
+
+.slider::-moz-range-track {
+  height: 6px;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--p-accent-2), var(--p-cyan));
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(84, 140, 220, 0.50);
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(84, 140, 220, 0.30);
+}
+
+/* Prefer light scheme tweaks */
+@media (prefers-color-scheme: light) {
+  .slider-container label {
+    color: #213547;
   }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.main-container {
+  width: 88vw;
+  max-width: 1200px;
+  height: 82vh;
+  padding: 20px 24px;
+  border-radius: 16px;
+
+  /* light glass */
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(84, 140, 220, 0.30);      /* --p-blue-2 */
+  box-shadow: 0 12px 36px rgba(84, 140, 220, 0.20);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+  overflow: hidden; /* keep content inside rounded corners */
 }
 
-.card {
-  padding: 2em;
+/* Grid layout */
+.music-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  max-width: 100%;
+  overflow: hidden; /* prevent flex overflow */
 }
 
-.read-the-docs {
-  color: #888;
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(60, 162, 206, 0.25);      /* --p-cyan */
+  box-shadow: 0 8px 22px rgba(60, 162, 206, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  flex: 1 1 auto;   /* allow shrinking next to .grid-options */
+  min-width: 0;     /* critical for flex overflow */
+  max-width: 100%;
 }
+
