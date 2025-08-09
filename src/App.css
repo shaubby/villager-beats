@@ -9,38 +9,37 @@
   display:flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;      /* was 75vw */
-  min-width: 0;     /* allow children to shrink */
+  width: 100%;
+  min-width: 0;
   gap: 3px;
 }
 .grid-item {
-  flex: 1 1 0;      /* can grow/shrink evenly */
+  flex: 1 1 0;
   min-width: 0;
   height: 8vh;
   margin: 4px;
   border-radius: 10px;
 
   background: rgba(255, 255, 255, 0.70);
-  border: 1px solid rgba(84, 140, 220, 0.25);      /* --p-blue-2 */
+  border: 1px solid rgba(84, 140, 220, 0.25);
   box-shadow: 0 4px 14px rgba(84, 140, 220, 0.15);
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
 .grid-item:hover {
   transform: translateY(-2px);
-  border-color: rgba(54, 105, 182, 0.55);          /* --p-accent */
+  border-color: rgba(54, 105, 182, 0.55);
   box-shadow: 0 8px 22px rgba(84, 140, 220, 0.25);
 }
 .clicked {
   background: linear-gradient(135deg,
-    rgba(129, 209, 241, 0.75),                  /* --p-accent-2 */
-    rgba(60, 162, 206, 0.75)                    /* --p-cyan */
+    rgba(129, 209, 241, 0.75),
+    rgba(60, 162, 206, 0.75)
   );
-  border-color: rgba(54, 105, 182, 0.70);         /* --p-accent */
+  border-color: rgba(54, 105, 182, 0.70);
   box-shadow: 0 10px 26px rgba(84, 140, 220, 0.30), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
-/* Sound icon */
 .soundIcon {
   width: 48px;
   height: 48px;
@@ -49,13 +48,12 @@
   margin-right: 6px;
 
   background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(60, 162, 206, 0.25);      /* --p-cyan */
+  border: 1px solid rgba(60, 162, 206, 0.25);
   box-shadow: 0 6px 16px rgba(84, 140, 220, 0.20);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Grid controls */
 .grid-options {
   width: 64px;
   min-width: 64px;
@@ -73,10 +71,9 @@
   box-shadow: 0 6px 18px rgba(84, 140, 220, 0.18);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  flex: 0 0 64px;   /* fixed width control rail */
+  flex: 0 0 64px;
 }
 
-/* Fixed invalid sizes (2w -> px) and glass buttons */
 .add, .remove, .play {
   width: 48px;
   height: 48px;
@@ -99,7 +96,6 @@
   color: var(--p-accent);
 }
 
-/* Sliders panel */
 .sliders {
   height: auto;
   display: flex;
@@ -128,12 +124,11 @@
   text-shadow: none;
 }
 
-/* Slider track + thumb */
 .slider {
   width: 100%;
   height: 6px;
   border-radius: 100px;
-  background: rgba(84, 140, 220, 0.20);            /* track bg */
+  background: rgba(84, 140, 220, 0.20);
   outline: none;
   appearance: none;
   cursor: pointer;
@@ -176,7 +171,6 @@
   box-shadow: 0 2px 6px rgba(84, 140, 220, 0.30);
 }
 
-/* Prefer light scheme tweaks */
 @media (prefers-color-scheme: light) {
   .slider-container label {
     color: #213547;
@@ -190,9 +184,8 @@
   padding: 20px 24px;
   border-radius: 16px;
 
-  /* light glass */
   background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(84, 140, 220, 0.30);      /* --p-blue-2 */
+  border: 1px solid rgba(84, 140, 220, 0.30);
   box-shadow: 0 12px 36px rgba(84, 140, 220, 0.20);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
@@ -203,16 +196,15 @@
   flex-direction: column;
   gap: 16px;
   box-sizing: border-box;
-  overflow: hidden; /* keep content inside rounded corners */
+  overflow: hidden;
 }
 
-/* Grid layout */
 .music-grid {
   display: flex;
   flex-direction: row;
   gap: 16px;
   max-width: 100%;
-  overflow: hidden; /* prevent flex overflow */
+  overflow: hidden;
 }
 
 .grid-container {
@@ -223,12 +215,13 @@
   border-radius: 14px;
 
   background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(60, 162, 206, 0.25);      /* --p-cyan */
+  border: 1px solid rgba(60, 162, 206, 0.25);
   box-shadow: 0 8px 22px rgba(60, 162, 206, 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  flex: 1 1 auto;   /* allow shrinking next to .grid-options */
-  min-width: 0;     /* critical for flex overflow */
+  flex: 1 1 auto;
+  min-width: 0;
   max-width: 100%;
 }
+
 
